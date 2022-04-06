@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { Repo } from './types/Repo'
+import { User } from './types/User'
 const GITHUB_URL: string = import.meta.env.VITE_APP_GITHUB_URL as string
 const GITHUB_TOKEN: string = import.meta.env.VITE_APP_GITHUB_TOKEN as string
 
@@ -8,7 +10,7 @@ const github = axios.create({
 })
 
 // Get search results
-export const searchUsers = async (text: string) => {
+export const searchUsers = async (text: string): Promise<Repo[]> => {
   const params = new URLSearchParams({
     q: text,
   })
@@ -18,7 +20,9 @@ export const searchUsers = async (text: string) => {
 }
 
 // Get user and repos
-export const getUserAndRepos = async (login: string) => {
+export const getUserAndRepos = async (
+  login: string
+): Promise<{ user: User; repos: Repo[] }> => {
   const [user, repos] = await Promise.all([
     github.get(`/users/${login}`),
     github.get(`/users/${login}/repos`),
