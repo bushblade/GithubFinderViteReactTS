@@ -3,8 +3,6 @@ import githubReducer, { GithubAction } from './GithubReducer'
 import { Repo } from './types/Repo'
 import { User, UserItem } from './types/User'
 
-// TODO: remove loading state
-
 export interface ProviderValue {
   users: UserItem[]
   user: User | null
