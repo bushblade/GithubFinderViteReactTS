@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import GithubContext from '../../context/github/GithubContext'
 import AlertContext from '../../context/alert/AlertContext'
 import { searchUsers } from '../../context/github/GithubActions'
+import { GHActionTypes } from '../../context/github/GithubReducer'
 
 function UserSearch() {
   const [text, setText] = useState('')
@@ -17,9 +18,9 @@ function UserSearch() {
     if (text === '') {
       setAlert('Please enter something', 'error')
     } else {
-      dispatch({ type: 'SET_LOADING' })
+      dispatch({ type: GHActionTypes.SET_LOADING })
       const users = await searchUsers(text)
-      dispatch({ type: 'GET_USERS', payload: users })
+      dispatch({ type: GHActionTypes.GET_USERS, payload: users })
 
       setText('')
     }
@@ -51,7 +52,7 @@ function UserSearch() {
       {users.length > 0 && (
         <div>
           <button
-            onClick={() => dispatch({ type: 'CLEAR_USERS' })}
+            onClick={() => dispatch({ type: GHActionTypes.CLEAR_USERS })}
             className='btn btn-ghost btn-lg'
           >
             Clear

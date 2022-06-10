@@ -2,13 +2,20 @@ import { ProviderValue } from './GithubContext'
 import { Repo } from './types/Repo'
 import { User, UserItem } from './types/User'
 
+export enum GHActionTypes {
+  GET_USERS = 'GET_USERS',
+  GET_USER_AND_REPOS = 'GET_USER_AND_REPOS',
+  SET_LOADING = 'SET_LOADING',
+  CLEAR_USERS = 'CLEAR_USERS',
+}
+
 interface GET_USERS {
-  type: 'GET_USERS'
+  type: GHActionTypes.GET_USERS
   payload: UserItem[]
 }
 
 interface GET_USER_AND_REPOS {
-  type: 'GET_USER_AND_REPOS'
+  type: GHActionTypes.GET_USER_AND_REPOS
   payload: {
     user: User
     repos: Repo[]
@@ -16,11 +23,18 @@ interface GET_USER_AND_REPOS {
 }
 
 interface SET_LOADING {
-  type: 'SET_LOADING'
+  type: GHActionTypes.SET_LOADING
+  payload?: any
 }
 
 interface CLEAR_USERS {
-  type: 'CLEAR_USERS'
+  type: GHActionTypes.CLEAR_USERS
+  payload?: any
+}
+
+type Unhandled = {
+  type: string
+  payload?: any
 }
 
 export type GithubAction =
@@ -28,37 +42,40 @@ export type GithubAction =
   | GET_USER_AND_REPOS
   | SET_LOADING
   | CLEAR_USERS
+  | Unhandled
 
 const githubReducer = (
   state: ProviderValue,
-  action: GithubAction
+  action: { type: GHActionTypes; payload?: any }
 ): ProviderValue => {
   switch (action.type) {
-    case 'GET_USERS':
+    case GHActionTypes.GET_USERS:
       return {
         ...state,
         users: action.payload,
         loading: false,
       }
-    case 'GET_USER_AND_REPOS':
+    case GHActionTypes.GET_USER_AND_REPOS:
       return {
         ...state,
         user: action.payload.user,
         repos: action.payload.repos,
         loading: false,
       }
-    case 'SET_LOADING':
+    case GHActionTypes.SET_LOADING:
       return {
         ...state,
         loading: true,
       }
-    case 'CLEAR_USERS':
+    case GHActionTypes.CLEAR_USERS:
       return {
         ...state,
         users: [],
       }
     default:
-      return state
+      throw new Error(
+        `No case for ${action.type} with payload: ${action.payload}`
+      )
   }
 }
 

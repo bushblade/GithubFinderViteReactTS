@@ -5,6 +5,7 @@ import Spinner from '../components/layout/Spinner'
 import RepoList from '../components/repos/RepoList'
 import GithubContext from '../context/github/GithubContext'
 import { getUserAndRepos } from '../context/github/GithubActions'
+import { GHActionTypes } from '../context/github/GithubReducer'
 
 function User() {
   const { user, loading, repos, dispatch } = useContext(GithubContext)
@@ -12,7 +13,7 @@ function User() {
   const params = useParams()
 
   useEffect(() => {
-    dispatch({ type: 'SET_LOADING' })
+    dispatch({ type: GHActionTypes.SET_LOADING })
     const getUserData = async () => {
       const userData = await getUserAndRepos(params.login as string)
       dispatch({ type: 'GET_USER_AND_REPOS', payload: userData })
