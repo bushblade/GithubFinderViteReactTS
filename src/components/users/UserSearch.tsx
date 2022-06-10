@@ -14,6 +14,7 @@ function UserSearch() {
     setText(e.target.value)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    dispatch({ type: GHActionTypes.SEARCH_USERS })
 
     if (text === '') {
       setAlert('Please enter something', 'error')

@@ -7,6 +7,7 @@ export enum GHActionTypes {
   GET_USER_AND_REPOS = 'GET_USER_AND_REPOS',
   CLEAR_USERS = 'CLEAR_USERS',
   CLEAR_USER = 'CLEAR_USER',
+  SEARCH_USERS = 'SEARCH_USERS',
 }
 
 interface GET_USERS {
@@ -32,6 +33,11 @@ interface CLEAR_USER {
   payload?: any
 }
 
+interface SEARCH_USERS {
+  type: GHActionTypes.SEARCH_USERS
+  payload?: any
+}
+
 type Unhandled = {
   type: string
   payload?: any
@@ -42,6 +48,7 @@ export type GithubAction =
   | GET_USER_AND_REPOS
   | CLEAR_USERS
   | CLEAR_USER
+  | SEARCH_USERS
   | Unhandled
 
 const githubReducer = (
@@ -49,10 +56,17 @@ const githubReducer = (
   action: { type: GHActionTypes; payload?: any }
 ): ProviderValue => {
   switch (action.type) {
+    case GHActionTypes.SEARCH_USERS:
+      return {
+        ...state,
+        users: [],
+        searching: true,
+      }
     case GHActionTypes.GET_USERS:
       return {
         ...state,
         users: action.payload,
+        searching: false,
       }
     case GHActionTypes.GET_USER_AND_REPOS:
       return {

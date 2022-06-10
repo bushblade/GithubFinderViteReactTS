@@ -7,6 +7,7 @@ export interface ProviderValue {
   users: UserItem[]
   user: User | null
   repos: Repo[]
+  searching: boolean
   dispatch: Dispatch<GithubAction>
 }
 
@@ -14,6 +15,7 @@ class InitialState implements ProviderValue {
   users: UserItem[] = []
   user: User | null = null
   repos: Repo[] = []
+  searching = false
   dispatch(action: GithubAction): void {
     throw new Error(`Default dispatch function used, of type: ${action.type}`)
   }
