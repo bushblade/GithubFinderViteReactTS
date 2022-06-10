@@ -53,7 +53,7 @@ export type GithubAction =
 
 const githubReducer = (
   state: ProviderValue,
-  action: { type: GHActionTypes; payload?: any }
+  action: GithubAction
 ): ProviderValue => {
   switch (action.type) {
     case GHActionTypes.SEARCH_USERS:
