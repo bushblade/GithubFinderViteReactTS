@@ -3,19 +3,19 @@ import githubReducer, { GithubAction } from './GithubReducer'
 import { Repo } from './types/Repo'
 import { User, UserItem } from './types/User'
 
+// TODO: remove loading state
+
 export interface ProviderValue {
   users: UserItem[]
-  user: User
+  user: User | null
   repos: Repo[]
-  loading: boolean
   dispatch: Dispatch<GithubAction>
 }
 
 class InitialState implements ProviderValue {
   users: UserItem[] = []
-  user: User = new User()
+  user: User | null = null
   repos: Repo[] = []
-  loading: boolean = false
   dispatch(action: GithubAction): void {
     throw new Error(`Default dispatch function used, of type: ${action.type}`)
   }

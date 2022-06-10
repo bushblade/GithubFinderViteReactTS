@@ -18,7 +18,7 @@ function UserSearch() {
     if (text === '') {
       setAlert('Please enter something', 'error')
     } else {
-      dispatch({ type: GHActionTypes.SET_LOADING })
+      dispatch({ type: GHActionTypes.CLEAR_USER })
       const users = await searchUsers(text)
       dispatch({ type: GHActionTypes.GET_USERS, payload: users })
 

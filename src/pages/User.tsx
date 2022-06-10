@@ -8,19 +8,23 @@ import { getUserAndRepos } from '../context/github/GithubActions'
 import { GHActionTypes } from '../context/github/GithubReducer'
 
 function User() {
-  const { user, loading, repos, dispatch } = useContext(GithubContext)
+  const { user, repos, dispatch } = useContext(GithubContext)
 
   const params = useParams()
 
   useEffect(() => {
-    dispatch({ type: GHActionTypes.SET_LOADING })
+    dispatch({ type: GHActionTypes.CLEAR_USER })
     const getUserData = async () => {
       const userData = await getUserAndRepos(params.login as string)
-      dispatch({ type: 'GET_USER_AND_REPOS', payload: userData })
+      dispatch({ type: GHActionTypes.GET_USER_AND_REPOS, payload: userData })
     }
 
     getUserData()
   }, [dispatch, params.login])
+
+  if (!user) {
+    return <Spinner />
+  }
 
   const {
     name,
@@ -38,10 +42,6 @@ function User() {
     public_gists,
     hireable,
   } = user
-
-  if (loading) {
-    return <Spinner />
-  }
 
   // NOTE: check for valid url to users website
 
