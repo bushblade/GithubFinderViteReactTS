@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useReducer } from 'react'
-import alertReducer from './AlertReducer'
+import alertReducer, { AlertActionTypes } from './AlertReducer'
 
 export interface Alert {
   msg: string
@@ -32,11 +32,11 @@ export const AlertProvider = ({ children }: { children: ReactNode }) => {
   // Set an alert
   const setAlert: SetAlert = (msg, type) => {
     dispatch({
-      type: 'SET_ALERT',
+      type: AlertActionTypes.SET_ALERT,
       payload: { msg, type },
     })
 
-    setTimeout(() => dispatch({ type: 'REMOVE_ALERT' }), 3000)
+    setTimeout(() => dispatch({ type: AlertActionTypes.REMOVE_ALERT }), 3000)
   }
 
   return (
