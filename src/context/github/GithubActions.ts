@@ -10,7 +10,7 @@ const github = axios.create({
 })
 
 // Get search results
-export const searchUsers = async (text: string): Promise<Repo[]> => {
+export const searchUsers = async (text: string): Promise<User[]> => {
   const params = new URLSearchParams({
     q: text,
   })
