@@ -25,22 +25,14 @@ interface GET_USER_AND_REPOS {
 
 interface CLEAR_USERS {
   type: GHActionTypes.CLEAR_USERS
-  payload?: any
 }
 
 interface CLEAR_USER {
   type: GHActionTypes.CLEAR_USER
-  payload?: any
 }
 
 interface SEARCH_USERS {
   type: GHActionTypes.SEARCH_USERS
-  payload?: any
-}
-
-type Unhandled = {
-  type: string
-  payload?: any
 }
 
 export type GithubAction =
@@ -49,7 +41,6 @@ export type GithubAction =
   | CLEAR_USERS
   | CLEAR_USER
   | SEARCH_USERS
-  | Unhandled
 
 const githubReducer = (
   state: ProviderValue,
@@ -85,9 +76,7 @@ const githubReducer = (
         user: null,
       }
     default:
-      throw new Error(
-        `No case for ${action.type} with payload: ${action.payload}`
-      )
+      throw new Error('Unhandled action')
   }
 }
 
