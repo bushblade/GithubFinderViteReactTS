@@ -15,8 +15,10 @@ function User() {
   useEffect(() => {
     dispatch({ type: GHActionTypes.CLEAR_USER })
     const getUserData = async () => {
-      const userData = await getUserAndRepos(params.login as string)
-      dispatch({ type: GHActionTypes.GET_USER_AND_REPOS, payload: userData })
+      if (params.login) {
+        const userData = await getUserAndRepos(params.login)
+        dispatch({ type: GHActionTypes.GET_USER_AND_REPOS, payload: userData })
+      }
     }
 
     getUserData()
